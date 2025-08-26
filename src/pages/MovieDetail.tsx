@@ -5,7 +5,7 @@ function MovieDetail() {
     return (
         <div>
             <p>Detalles</p>
-            <Link to="/">← Volver</Link>
+            <Link to="/" reloadDocument>← Volver</Link>
             <h1>{movie.title}</h1>
             <p>{movie.overview}</p>
             <p>Géneros: {movie.genres.map((genre: any) => genre.name).join(", ")}</p>
