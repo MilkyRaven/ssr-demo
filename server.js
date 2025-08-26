@@ -36,8 +36,10 @@ if (!isProduction) {
 // Serve HTML
 app.use("*all", async (req, res) => {
   try {
-    const url = req.originalUrl.replace(base, "");
-
+    console.log("original", req.originalUrl);
+    //const url = req.originalUrl.replace(base, ""); //útil si la app está montada en un subpath
+    const url = req.originalUrl;
+    console.log("transformada", url);
     /** @type {string} */
     let template;
     /** @type {import('./src/entry-server.ts').render} */

@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 function Home() {
     const movies = useLoaderData() as { id: number; title: string }[];
@@ -7,7 +7,13 @@ function Home() {
             <h1>Movies</h1>
             <ul>
                 {movies.map((m) => (
-                    <li key={m.id}>{m.title}</li>
+                    <>
+                        <li key={m.id}>{m.title}</li>
+                        <Link to={`/movie/${m.id}`}>Ver más</Link>
+                        {/* <a href={`/movie/${m.id}`}>{m.title}</a> */}
+                    </>
+
+
                 ))}
             </ul>
         </div>
