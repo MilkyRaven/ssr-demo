@@ -1,6 +1,12 @@
-import { useLoaderData } from "react-router-dom";
 import Home from "./pages/Home";
 import MovieDetail from "./pages/MovieDetail";
+
+export const GENRES = [
+  { id: 28, name: "Acción" },
+  { id: 16, name: "Animación" },
+  { id: 35, name: "Comedia" },
+];
+
 
 export async function movieDetailLoader({ params }: { params: { id?: string } }) {
   console.log(params.id)
@@ -18,16 +24,25 @@ export async function movieDetailLoader({ params }: { params: { id?: string } })
 }
 
 export async function genreMoviesLoader() {
+  let results: any = {}
   try {
-    const response = await fetch(
-      `${process.env.BASE_URL}/discover/movie?api_key=${process.env.API_KEY}&with_genres=18&page=1`
+    await Promise.all(
+      GENRES.map(async (genre) => {
+        const res = await fetch(
+          `${process.env.BASE_URL}/discover/movie?api_key=${process.env.API_KEY}&with_genres=${genre.id}&page=1`
+        );
+        const data = await res.json();
+        results[genre.name] = data.results;
+      })
     );
-    const data = await response.json();
-    return data.results;
-  } catch (error) {
 
+    return results;
+  } catch (err) {
+    console.error("Error in homeLoader:", err);
+    throw err;
   }
 }
+
 
 export const routes = [
   {

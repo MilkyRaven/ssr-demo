@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router";
 import MovieCard from "../components/MovieCard";
 import { useState } from "react";
+import { GENRES } from "../routes";
 
 function Home() {
 
@@ -12,15 +13,19 @@ function Home() {
             : [...prev, movie])
     }
 
-    const movies = useLoaderData() as { id: number; title: string }[];
+    const moviesByGenre = useLoaderData();
     return (
         <div>
-            <h1>Acción</h1>
-            <ul style={{ display: "flex", flexDirection: "row", gap: 20, overflow: "scroll" }}>
-                {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} toggleFavorite={toggleFavorite} />
-                ))}
-            </ul>
+            {GENRES.map((genre) => (
+                <div key={genre.id}>
+                    <h2>{genre.name}</h2>
+                    <ul style={{ display: "flex", flexDirection: "row", gap: 20, overflow: "scroll" }}>
+                        {moviesByGenre[genre.name]?.map((movie: any) => (
+                            <MovieCard key={movie.id} movie={movie} toggleFavorite={toggleFavorite} />
+                        ))}
+                    </ul>
+                </div>
+            ))}
             {/* Favorites */}
             <div>
                 <h1>Listado de favoritos</h1>
