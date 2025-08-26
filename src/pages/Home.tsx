@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router";
 import MovieCard from "../components/MovieCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GENRES } from "../routes";
 
 function Home() {
@@ -8,10 +8,21 @@ function Home() {
     const [favorites, setFavorites] = useState<any[]>([])
 
     const toggleFavorite = (movie: any) => {
-        setFavorites((prev) => prev.includes(movie)
-            ? prev.filter(favId => favId !== movie)
-            : [...prev, movie])
+        setFavorites((prev) => {
+            const exists = prev.some((fav) => fav.id === movie.id);
+            const newFavs = exists
+                ? prev.filter((fav) => fav.id !== movie.id)
+                : [...prev, movie];
+
+            localStorage.setItem("favorites", JSON.stringify(newFavs));
+            return newFavs;
+        });
     }
+
+    useEffect(() => {
+        const stored = localStorage.getItem("favorites");
+        if (stored) setFavorites(JSON.parse(stored));
+    }, []);
 
     const moviesByGenre = useLoaderData();
     return (
