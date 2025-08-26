@@ -1,15 +1,11 @@
 import { useLoaderData } from "react-router-dom";
-
+import Home from "./pages/Home";
+import { getMoviesByGenre } from "../api"
 export const routes = [
   {
     path: "/",
-    loader() {
-      return { message: "Home" };
-    },
-    Component() {
-      let data = useLoaderData();
-      return <h1>{data.message}</h1>;
-    },
+    loader: getMoviesByGenre,
+    Component: Home,
   },
   {
     path: "/favorites",
