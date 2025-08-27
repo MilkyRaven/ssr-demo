@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import "./styles.css"
 
 function MovieCard({ movie, toggleFavorite }: any) {
+    // const { toggleFavorite } = useFavorites()
     return (
         <div className="movie-card">
             {/* encabezado */}
